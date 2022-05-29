@@ -45,6 +45,26 @@ public interface LabWebService {
 
     /**
      * 
+     * @param name
+     * @return
+     *     returns java.util.List<client_gen.God>
+     * @throws MySQLException
+     */
+    @WebMethod
+    @WebResult(targetNamespace = "")
+    @RequestWrapper(localName = "getGodByName", targetNamespace = "http://server/", className = "client_gen.GetGodByName")
+    @ResponseWrapper(localName = "getGodByNameResponse", targetNamespace = "http://server/", className = "client_gen.GetGodByNameResponse")
+    @Action(input = "http://server/LabWebService/getGodByNameRequest", output = "http://server/LabWebService/getGodByNameResponse", fault = {
+        @FaultAction(className = MySQLException.class, value = "http://server/LabWebService/getGodByName/Fault/MySQLException")
+    })
+    public List<God> getGodByName(
+        @WebParam(name = "name", targetNamespace = "")
+        String name)
+        throws MySQLException
+    ;
+
+    /**
+     * 
      * @param culture
      * @return
      *     returns java.util.List<client_gen.God>
@@ -65,46 +85,6 @@ public interface LabWebService {
 
     /**
      * 
-     * @param godOf
-     * @return
-     *     returns java.util.List<client_gen.God>
-     * @throws MySQLException
-     */
-    @WebMethod
-    @WebResult(targetNamespace = "")
-    @RequestWrapper(localName = "getGodsByGodOf", targetNamespace = "http://server/", className = "client_gen.GetGodsByGodOf")
-    @ResponseWrapper(localName = "getGodsByGodOfResponse", targetNamespace = "http://server/", className = "client_gen.GetGodsByGodOfResponse")
-    @Action(input = "http://server/LabWebService/getGodsByGodOfRequest", output = "http://server/LabWebService/getGodsByGodOfResponse", fault = {
-        @FaultAction(className = MySQLException.class, value = "http://server/LabWebService/getGodsByGodOf/Fault/MySQLException")
-    })
-    public List<God> getGodsByGodOf(
-        @WebParam(name = "god_of", targetNamespace = "")
-        String godOf)
-        throws MySQLException
-    ;
-
-    /**
-     * 
-     * @param id
-     * @return
-     *     returns java.util.List<client_gen.God>
-     * @throws MySQLException
-     */
-    @WebMethod
-    @WebResult(targetNamespace = "")
-    @RequestWrapper(localName = "getGodsById", targetNamespace = "http://server/", className = "client_gen.GetGodsById")
-    @ResponseWrapper(localName = "getGodsByIdResponse", targetNamespace = "http://server/", className = "client_gen.GetGodsByIdResponse")
-    @Action(input = "http://server/LabWebService/getGodsByIdRequest", output = "http://server/LabWebService/getGodsByIdResponse", fault = {
-        @FaultAction(className = MySQLException.class, value = "http://server/LabWebService/getGodsById/Fault/MySQLException")
-    })
-    public List<God> getGodsById(
-        @WebParam(name = "id", targetNamespace = "")
-        int id)
-        throws MySQLException
-    ;
-
-    /**
-     * 
      * @param culture
      * @param name
      * @param id
@@ -112,8 +92,8 @@ public interface LabWebService {
      * @param godOf
      * @return
      *     returns java.util.List<client_gen.God>
-     * @throws EmptyArgException
      * @throws MySQLException
+     * @throws EmptyArgException
      */
     @WebMethod
     @WebResult(targetNamespace = "")
@@ -139,44 +119,22 @@ public interface LabWebService {
 
     /**
      * 
-     * @param name
+     * @param godOf
      * @return
      *     returns java.util.List<client_gen.God>
      * @throws MySQLException
      */
     @WebMethod
     @WebResult(targetNamespace = "")
-    @RequestWrapper(localName = "getGodByName", targetNamespace = "http://server/", className = "client_gen.GetGodByName")
-    @ResponseWrapper(localName = "getGodByNameResponse", targetNamespace = "http://server/", className = "client_gen.GetGodByNameResponse")
-    @Action(input = "http://server/LabWebService/getGodByNameRequest", output = "http://server/LabWebService/getGodByNameResponse", fault = {
-        @FaultAction(className = MySQLException.class, value = "http://server/LabWebService/getGodByName/Fault/MySQLException")
+    @RequestWrapper(localName = "getGodsByGodOf", targetNamespace = "http://server/", className = "client_gen.GetGodsByGodOf")
+    @ResponseWrapper(localName = "getGodsByGodOfResponse", targetNamespace = "http://server/", className = "client_gen.GetGodsByGodOfResponse")
+    @Action(input = "http://server/LabWebService/getGodsByGodOfRequest", output = "http://server/LabWebService/getGodsByGodOfResponse", fault = {
+        @FaultAction(className = MySQLException.class, value = "http://server/LabWebService/getGodsByGodOf/Fault/MySQLException")
     })
-    public List<God> getGodByName(
-        @WebParam(name = "name", targetNamespace = "")
-        String name)
+    public List<God> getGodsByGodOf(
+        @WebParam(name = "god_of", targetNamespace = "")
+        String godOf)
         throws MySQLException
-    ;
-
-    /**
-     * 
-     * @param id
-     * @return
-     *     returns java.lang.String
-     * @throws EmptyArgException
-     * @throws MySQLException
-     */
-    @WebMethod
-    @WebResult(targetNamespace = "")
-    @RequestWrapper(localName = "deleteGod", targetNamespace = "http://server/", className = "client_gen.DeleteGod")
-    @ResponseWrapper(localName = "deleteGodResponse", targetNamespace = "http://server/", className = "client_gen.DeleteGodResponse")
-    @Action(input = "http://server/LabWebService/deleteGodRequest", output = "http://server/LabWebService/deleteGodResponse", fault = {
-        @FaultAction(className = EmptyArgException.class, value = "http://server/LabWebService/deleteGod/Fault/EmptyArgException"),
-        @FaultAction(className = MySQLException.class, value = "http://server/LabWebService/deleteGod/Fault/MySQLException")
-    })
-    public String deleteGod(
-        @WebParam(name = "id", targetNamespace = "")
-        int id)
-        throws EmptyArgException, MySQLException
     ;
 
     /**
@@ -188,8 +146,8 @@ public interface LabWebService {
      * @param godOf
      * @return
      *     returns java.lang.String
-     * @throws EmptyArgException
      * @throws MySQLException
+     * @throws EmptyArgException
      */
     @WebMethod
     @WebResult(targetNamespace = "")
@@ -215,26 +173,57 @@ public interface LabWebService {
 
     /**
      * 
-     * @param culture
-     * @param godOf
+     * @param id
+     * @return
+     *     returns java.lang.String
+     * @throws MySQLException
+     * @throws EmptyArgException
+     */
+    @WebMethod
+    @WebResult(targetNamespace = "")
+    @RequestWrapper(localName = "deleteGod", targetNamespace = "http://server/", className = "client_gen.DeleteGod")
+    @ResponseWrapper(localName = "deleteGodResponse", targetNamespace = "http://server/", className = "client_gen.DeleteGodResponse")
+    @Action(input = "http://server/LabWebService/deleteGodRequest", output = "http://server/LabWebService/deleteGodResponse", fault = {
+        @FaultAction(className = EmptyArgException.class, value = "http://server/LabWebService/deleteGod/Fault/EmptyArgException"),
+        @FaultAction(className = MySQLException.class, value = "http://server/LabWebService/deleteGod/Fault/MySQLException")
+    })
+    public String deleteGod(
+        @WebParam(name = "id", targetNamespace = "")
+        int id)
+        throws EmptyArgException, MySQLException
+    ;
+
+    /**
+     * 
+     * @param id
      * @return
      *     returns java.util.List<client_gen.God>
      * @throws MySQLException
      */
     @WebMethod
     @WebResult(targetNamespace = "")
-    @RequestWrapper(localName = "getGodsByCultureAndGodOf", targetNamespace = "http://server/", className = "client_gen.GetGodsByCultureAndGodOf")
-    @ResponseWrapper(localName = "getGodsByCultureAndGodOfResponse", targetNamespace = "http://server/", className = "client_gen.GetGodsByCultureAndGodOfResponse")
-    @Action(input = "http://server/LabWebService/getGodsByCultureAndGodOfRequest", output = "http://server/LabWebService/getGodsByCultureAndGodOfResponse", fault = {
-        @FaultAction(className = MySQLException.class, value = "http://server/LabWebService/getGodsByCultureAndGodOf/Fault/MySQLException")
+    @RequestWrapper(localName = "getGodsById", targetNamespace = "http://server/", className = "client_gen.GetGodsById")
+    @ResponseWrapper(localName = "getGodsByIdResponse", targetNamespace = "http://server/", className = "client_gen.GetGodsByIdResponse")
+    @Action(input = "http://server/LabWebService/getGodsByIdRequest", output = "http://server/LabWebService/getGodsByIdResponse", fault = {
+        @FaultAction(className = MySQLException.class, value = "http://server/LabWebService/getGodsById/Fault/MySQLException")
     })
-    public List<God> getGodsByCultureAndGodOf(
-        @WebParam(name = "culture", targetNamespace = "")
-        String culture,
-        @WebParam(name = "god_of", targetNamespace = "")
-        String godOf)
+    public List<God> getGodsById(
+        @WebParam(name = "id", targetNamespace = "")
+        int id)
         throws MySQLException
     ;
+
+    /**
+     * 
+     * @return
+     *     returns byte[]
+     */
+    @WebMethod
+    @WebResult(targetNamespace = "")
+    @RequestWrapper(localName = "getImage", targetNamespace = "http://server/", className = "client_gen.GetImage")
+    @ResponseWrapper(localName = "getImageResponse", targetNamespace = "http://server/", className = "client_gen.GetImageResponse")
+    @Action(input = "http://server/LabWebService/getImageRequest", output = "http://server/LabWebService/getImageResponse")
+    public byte[] getImage();
 
     /**
      * 
@@ -256,6 +245,29 @@ public interface LabWebService {
         String name,
         @WebParam(name = "culture", targetNamespace = "")
         String culture)
+        throws MySQLException
+    ;
+
+    /**
+     * 
+     * @param culture
+     * @param godOf
+     * @return
+     *     returns java.util.List<client_gen.God>
+     * @throws MySQLException
+     */
+    @WebMethod
+    @WebResult(targetNamespace = "")
+    @RequestWrapper(localName = "getGodsByCultureAndGodOf", targetNamespace = "http://server/", className = "client_gen.GetGodsByCultureAndGodOf")
+    @ResponseWrapper(localName = "getGodsByCultureAndGodOfResponse", targetNamespace = "http://server/", className = "client_gen.GetGodsByCultureAndGodOfResponse")
+    @Action(input = "http://server/LabWebService/getGodsByCultureAndGodOfRequest", output = "http://server/LabWebService/getGodsByCultureAndGodOfResponse", fault = {
+        @FaultAction(className = MySQLException.class, value = "http://server/LabWebService/getGodsByCultureAndGodOf/Fault/MySQLException")
+    })
+    public List<God> getGodsByCultureAndGodOf(
+        @WebParam(name = "culture", targetNamespace = "")
+        String culture,
+        @WebParam(name = "god_of", targetNamespace = "")
+        String godOf)
         throws MySQLException
     ;
 

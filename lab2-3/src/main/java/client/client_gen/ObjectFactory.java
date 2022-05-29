@@ -37,10 +37,12 @@ public class ObjectFactory {
     private final static QName _MySQLException_QNAME = new QName("http://server/", "MySQLException");
     private final static QName _UpdateGod_QNAME = new QName("http://server/", "updateGod");
     private final static QName _GetGodsById_QNAME = new QName("http://server/", "getGodsById");
+    private final static QName _GetImageResponse_QNAME = new QName("http://server/", "getImageResponse");
     private final static QName _GetGodsByCulture_QNAME = new QName("http://server/", "getGodsByCulture");
     private final static QName _GetGodsByCultureAndGodOf_QNAME = new QName("http://server/", "getGodsByCultureAndGodOf");
     private final static QName _GetGodsByCultureAndGodOfResponse_QNAME = new QName("http://server/", "getGodsByCultureAndGodOfResponse");
     private final static QName _GetGodByName_QNAME = new QName("http://server/", "getGodByName");
+    private final static QName _GetImage_QNAME = new QName("http://server/", "getImage");
     private final static QName _GetGodsByCultureResponse_QNAME = new QName("http://server/", "getGodsByCultureResponse");
     private final static QName _GetGodsByNameAndCultureResponse_QNAME = new QName("http://server/", "getGodsByNameAndCultureResponse");
     private final static QName _EmptyArgException_QNAME = new QName("http://server/", "EmptyArgException");
@@ -60,6 +62,14 @@ public class ObjectFactory {
      */
     public GetGodsById createGetGodsById() {
         return new GetGodsById();
+    }
+
+    /**
+     * Create an instance of {@link GetImageResponse }
+     * 
+     */
+    public GetImageResponse createGetImageResponse() {
+        return new GetImageResponse();
     }
 
     /**
@@ -223,6 +233,14 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link GetImage }
+     * 
+     */
+    public GetImage createGetImage() {
+        return new GetImage();
+    }
+
+    /**
      * Create an instance of {@link GetGodsByCulture }
      * 
      */
@@ -356,6 +374,15 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link GetImageResponse }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://server/", name = "getImageResponse")
+    public JAXBElement<GetImageResponse> createGetImageResponse(GetImageResponse value) {
+        return new JAXBElement<GetImageResponse>(_GetImageResponse_QNAME, GetImageResponse.class, null, value);
+    }
+
+    /**
      * Create an instance of {@link JAXBElement }{@code <}{@link GetGodsByCulture }{@code >}}
      * 
      */
@@ -389,6 +416,15 @@ public class ObjectFactory {
     @XmlElementDecl(namespace = "http://server/", name = "getGodByName")
     public JAXBElement<GetGodByName> createGetGodByName(GetGodByName value) {
         return new JAXBElement<GetGodByName>(_GetGodByName_QNAME, GetGodByName.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link GetImage }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://server/", name = "getImage")
+    public JAXBElement<GetImage> createGetImage(GetImage value) {
+        return new JAXBElement<GetImage>(_GetImage_QNAME, GetImage.class, null, value);
     }
 
     /**

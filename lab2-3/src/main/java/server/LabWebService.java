@@ -6,6 +6,8 @@ import server.exceptions.MySQLException;
 import server.exceptions.faults.EmptyArgFault;
 import server.exceptions.faults.SQLFault;
 
+import javax.activation.DataHandler;
+import javax.activation.FileDataSource;
 import javax.jws.WebMethod;
 import javax.jws.WebParam;
 import javax.jws.WebService;
@@ -213,6 +215,11 @@ public class LabWebService {
         }
         //String result = dao.updateGod(god);
         //return result;
+    }
+
+    @WebMethod(operationName = "getImage")
+    public DataHandler getImage() {
+        return(new DataHandler(new FileDataSource("C:\\Users\\Stepan\\Downloads\\lab1\\src\\main\\java\\server\\image.jpg")));
     }
 
 

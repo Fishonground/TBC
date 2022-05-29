@@ -4,6 +4,8 @@ package client;
 
 import server.exceptions.EmptyArgException;
 
+import java.io.FileOutputStream;
+import java.io.OutputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.List;
@@ -11,7 +13,7 @@ import java.util.List;
 public class Main {
 
     public static void main(String[] args) throws MalformedURLException {
-            URL url = new URL ("http://0.0.0.0:8080/hello?wsdl");
+            URL url = new URL ("http://localhost:8080/hello?wsdl");
         try {
             client_gen.GodService godService = new client_gen.GodService(url);
             System.out.println("=== Get all gods ===");
@@ -49,7 +51,7 @@ public class Main {
             //System.out.println(gods.get(0).getCulture());
             printer(gods);*/
 
-            System.out.println("=== Create new god ===");
+            /*System.out.println("=== Create new god ===");
 
             try{
                 gods = godService.getLabWebServicePort().createNewGod(10, "ЧТо-нибудь;select *", "Древняя Русь", "Неизвестно", "Ремесел");
@@ -61,7 +63,18 @@ public class Main {
 
             System.out.println("=== Check the result ===");
             gods = godService.getLabWebServicePort().getAllGods();
-            printer(gods);
+            printer(gods);*/
+            try{
+            System.out.println("==========GET FILE=============");
+            byte[] image = godService.getLabWebServicePort().getImage();
+            OutputStream out = new FileOutputStream("test.jpg");
+            out.write(image);
+            out.flush();
+            out.close();
+            }
+            catch (Exception e) {
+                System.out.println("Something went wrong!");
+            }
 
 
 //            System.out.println("=== Update the god ===");

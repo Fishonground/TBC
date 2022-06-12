@@ -1,6 +1,7 @@
 package client;
 
 import java.io.IOException;
+import java.util.Base64;
 import java.util.Map;
 
 import com.google.gson.Gson;
@@ -9,6 +10,9 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
+import okhttp3.Route;
+import okhttp3.Authenticator;
+import okhttp3.Credentials;
 //import ru.dnoskov.rsifmo.service.model.RestResponse;
 import okhttp3.HttpUrl;
 import okhttp3.MediaType;
@@ -42,9 +46,16 @@ public class RequestSender {
         }
 
         client = new OkHttpClient();
-
+        
     }
 
+    private static String getSecureCreds() {
+        String authString =  "login:pass";
+        return new String(Base64.getEncoder().encode(authString.getBytes()));
+    }
+    
+    
+    
     public RestResponse doGet() throws IOException {
         Request request = new Request.Builder()
                 .url(url)
@@ -59,6 +70,7 @@ public class RequestSender {
         Request request = new Request.Builder()
                 .url(url)
                 .post(requestBody)
+                .addHeader("Authorization", "Basic " + getSecureCreds())
                 .build();
 
         Response response = client.newCall(request).execute();
@@ -69,6 +81,7 @@ public class RequestSender {
         Request request = new Request.Builder()
                 .url(url)
                 .put(requestBody)
+                .addHeader("Authorization", "Basic " + getSecureCreds())
                 .build();
 
         Response response = client.newCall(request).execute();
@@ -79,6 +92,7 @@ public class RequestSender {
         Request request = new Request.Builder()
                 .url(url)
                 .delete(requestBody)
+                .addHeader("Authorization", "Basic " + getSecureCreds())
                 .build();
 
         Response response = client.newCall(request).execute();

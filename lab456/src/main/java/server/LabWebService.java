@@ -1,6 +1,7 @@
 package server;
 
 
+//import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import server.exceptions.EmptyArgException;
 import server.exceptions.MySQLException;
@@ -9,8 +10,11 @@ import server.exceptions.MySQLException;
 
 
 import java.sql.SQLException;
+import java.util.Base64;
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+import javax.ws.rs.HeaderParam;
 
 @RestController
 public class  LabWebService {
@@ -114,10 +118,12 @@ public class  LabWebService {
     //Lab 2 starts here
 
     @PostMapping("/gods")
-    public ListGodsResponse /*List<God>*/ createNewGod(@RequestBody God god /*int id, @RequestBody String name,
+    public ListGodsResponse createNewGod(@RequestBody God god, @RequestHeader("Authorization") String token /*int id, @RequestBody String name,
                                               @RequestBody String culture,
                             @RequestBody String power,
                             @RequestBody String god_of*/) throws EmptyArgException, MySQLException{
+    	//System.out.println("test");
+    	
         DAO dao = new DAO();
         if (god.getName() == null || god.getName().equals("")) {
             //EmptyArgFault fault = new EmptyArgFault("name");
@@ -138,8 +144,18 @@ public class  LabWebService {
             throw new EmptyArgException();
         }
 
+        
+        
         //God god = new God(id, name, culture, power, god_of);
         try {
+        	AuthChecking(token);
+        }
+        catch(Exception e) {
+        	System.out.println("WRONG AUTH!!!!!");
+        	throw new EmptyArgException();
+        }
+        try {
+        	
             return new ListGodsResponse((new DAO()).createNewGod(god));
             //return dao.createNewGod(god);
         } catch (SQLException e) {
@@ -147,18 +163,27 @@ public class  LabWebService {
             //SQLFault fault = new SQLFault();
             throw new MySQLException(e.getMessage(), e);
         }
+        
         //god = dao.createNewGod(god);
         //return god;
     }
 
     @DeleteMapping("/gods/{id}")
-    public String deleteGod(@PathVariable(name = "id") int id) throws EmptyArgException, MySQLException{
+    public String deleteGod(@PathVariable(name = "id") int id, @RequestHeader("Authorization") String token) throws EmptyArgException, MySQLException{
         DAO dao = new DAO();
         //System.out.println(id);
         if ((id < 0) || (id == 0) )  {
             //EmptyArgFault fault = new EmptyArgFault("id");
             throw new EmptyArgException();
         }
+        try {
+        	AuthChecking(token);
+        }
+        catch(Exception e) {
+        	System.out.println("WRONG AUTH!!!!!");
+        	throw new EmptyArgException();
+        }
+        
         try {
             return dao.deleteGod(id);
         } catch (SQLException e) {
@@ -176,8 +201,8 @@ public class  LabWebService {
     	return "true";
     }*/
 
-    @PutMapping("/gods/upd/{id}")
-    public String updateGod(@PathVariable(name = "id") int id, @RequestBody God god /*String name,
+    @PutMapping("/gods/{id}")
+    public String updateGod(@PathVariable(name = "id") int id, @RequestBody God god, @RequestHeader("Authorization") String token /*String name,
                             @RequestBody String culture,
                             @RequestBody String power,
                             @RequestBody String god_of*/) throws MySQLException, EmptyArgException {
@@ -209,6 +234,15 @@ public class  LabWebService {
             //EmptyArgFault fault = new EmptyArgFault("god_of");
             throw new EmptyArgException();
         }
+        
+        
+        try {
+        	AuthChecking(token);
+        }
+        catch(Exception e) {
+        	System.out.println("WRONG AUTH!!!!!");
+        	throw new EmptyArgException();
+        }
 
         try {
             return dao.updateGod(god);
@@ -221,6 +255,20 @@ public class  LabWebService {
         }
         //String result = dao.updateGod(god);
         //return result;
+    }
+    
+    
+    
+    private void AuthChecking(String token) throws Exception {
+
+        String[] creds = (new String(Base64.getDecoder().decode(token.split(" ")[1]), "UTF-8")).split(":");
+        String login = creds[0];
+        String password = creds[1];
+
+        if (!login.equals("login") || !password.equals("password")) {
+            throw new Exception("Someone tries to hack us!");
+        }
+
     }
     
 

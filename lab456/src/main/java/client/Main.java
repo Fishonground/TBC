@@ -22,22 +22,22 @@ public class Main {
             	System.out.println("=== Get all gods ===");
             	printer(getAllGods());
             	
-				System.out.println("=== Get gods by name ===");
-				printer(getGodsByName("Зевс"));
-				
-				System.out.println("=== Get gods by culture ===");
-				printer(getGodsByCulture("ВТ"));
-				
-				System.out.println("=== Get gods by god_of ===");
-				printer(getGodsByGodOf("Войны"));
-				
-				System.out.println("=== Get all gods by id ==="); 
-				printer(getGodById(1));
-				
-				System.out.println("=== Get all gods By Name And Culture ===");
-				printer(getGodsByNameAndCulture("Зевс","Греция"));  
-				System.out.println("=== Get gods By Culture And GodOf ===");
-				printer(getGodsByCultureAndGodOf("Греция","Грома"));  
+//				System.out.println("=== Get gods by name ===");
+//				printer(getGodsByName("Зевс"));
+//				
+//				System.out.println("=== Get gods by culture ===");
+//				printer(getGodsByCulture("ВТ"));
+//				
+//				System.out.println("=== Get gods by god_of ===");
+//				printer(getGodsByGodOf("Войны"));
+//				
+//				System.out.println("=== Get all gods by id ==="); 
+//				printer(getGodById(1));
+//				
+//				System.out.println("=== Get all gods By Name And Culture ===");
+//				printer(getGodsByNameAndCulture("Зевс","Греция"));  
+//				System.out.println("=== Get gods By Culture And GodOf ===");
+//				printer(getGodsByCultureAndGodOf("Греция","Грома"));  
 				
 				System.out.println("=== Create new god ===");
 				God cr_god = getGodById(1).get(0);
@@ -45,14 +45,18 @@ public class Main {
 				cr_god.setCulture("Земля");
 				cr_god.setPower("Я");
             	cr_god.setGod_of("Родился");
-            	printer(createGod(cr_god));
+            	try {
+            		printer(createGod(cr_god));
+            	} catch (Exception e) {
+            		System.out.println("Creating went wrong!");
+            	}
             	
             	
             	System.out.println("=== Check the result ===");
             	printer(getAllGods());
             	
             	System.out.println("=== Update the god ===");
-            	God upd_god = getGodById(16).get(0);
+            	God upd_god = getGodById(19).get(0);
             	upd_god.setName("");
             	if (updateGod(upd_god))
             		System.out.println("Success!");
@@ -63,7 +67,7 @@ public class Main {
             		printer(getAllGods());
             	
             	System.out.println("=== Delete the god ===");
-            	if (deleteGod(-1))
+            	if (deleteGod(16))
             		System.out.println("Success!");
             	else
             		System.out.println("Something went wrong!");
@@ -164,6 +168,7 @@ public class Main {
     		String methodName = new String("/id/"+id);
 
     		RequestSender sender = new RequestSender(methodName, new HashMap<>());
+    		
     		RestResponse response = sender.doGet();
 
     		if (!String.valueOf(response.code).startsWith("2")) {
